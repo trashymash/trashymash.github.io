@@ -1,1 +1,1 @@
-# trashymash.github.io
+# trashymash blogs

@@ -1,7 +1,3 @@
----
-sort: 1
----
-
 # Cheatsheet
 
 Tips on automated tools
@@ -66,6 +62,28 @@ sudo nmap -Pn -n -v -sU -oN nmap/udp $TARGETip
 
 ```
 ## File Transfers (FTP) - Port 21
+Nmap recon - see if anonymous access is available
+```
+nmap -Pn -n -vv -p21 -sV -sC $TARGETip
+```
+
+Check with cli connection
+```
+ftp $TARGETip
+
+ftp> USER anonymous
+ftp> PASS anonymous
+```
+Check with web browse
+```
+ftp://$TARGETip
+```
+Upload 
+```
+ftp> binary
+ftp> put file/name
+```
+
 ## Secure Shell (SSH) - Port 22
 ## Domain Name System (DNS) - Port 53
 ## Hypertext Transfer (HTTP/S) - Port 80/443 

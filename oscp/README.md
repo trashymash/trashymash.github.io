@@ -1,6 +1,5 @@
----
-sort: 1
----
-
 # OSCP Journey
 
+sup
+
+{% include list.liquid %}
